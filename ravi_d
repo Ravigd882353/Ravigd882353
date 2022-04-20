@@ -1,0 +1,644 @@
+%----------------------------------required parameter of guiding projection length------------------------------------------------&
+x_cen1 = 0;
+y_cen1 = 0;
+z_cen1 = 0;
+
+
+C_height = z_cen1  + 1.25; %camera height in egovehicle
+C_offset = y_cen1 +  1.4; %camera offset 
+C_distance = y_cen1 + 8.4; % camera distance from guiding pojection length
+D2GP = y_cen1+ 7; % guiding projection distance to Headlight(scheinwerfer)
+H_height = z_cen1 + 0.72;  % Headlight(scheinwerfer) height
+H_width = x_cen1+ 0.6; % headlight width
+L_Start = x_cen1 + 0.75; % total width of egovehicle - guiding projection length 
+L_Length = y_cen1 + 30; % guiding projection length
+L_Width = 0.3; %guiding projection width 
+SW_total_length= (D2GP+L_Length);
+
+Total_length = (C_distance + L_Length);
+Total_width = 2.1;
+
+H_Fehler1 = pi/2;
+% H_Fehler = rotz(H_Fehler1);
+%H_Fehler1_rad2deg = rad2deg(H_Fehler1);
+V_Fehler1 = 0;
+%V_Fehler1_deg2rad = deg2rad(V_Fehler1);
+
+grid on
+%-----------------------------------------Projection view from Camera-------------------------------------------------------------%
+
+
+%---HORIZONTAL PARAMETER FROM CAMERA---%
+
+% start with horizontal 1st point
+xCH1 = L_Start  ;  
+yCH1 = C_distance;
+H_HYC1 = sqrt((xCH1^2)+(yCH1^2)); % hypotenuse of horizontal camera angle for 1st horizontal point
+CHP1 = asind(xCH1./H_HYC1); % horizontal alpha angle between starting point of guiding projection and  camera
+CHP1_beta = asind(yCH1./H_HYC1) ; % horizontal beta angle between camera and ending point of guiding projection light
+
+% horizontal 2nd point 
+xCH2 = (Total_width) / 2;    
+yCH2 = C_distance;
+H_HYC2 = sqrt((xCH2^2)+(yCH2^2));
+CHP2 = asind(xCH2./H_HYC2);
+CHP2_beta = asind(yCH2./H_HYC2);
+
+% horizontal 3rd point 
+xCH3 = (Total_width) / 2;     
+yCH3 = Total_length;
+H_HYC3 = sqrt((xCH3^2)+(yCH3^2));
+CHP3 = asind(xCH3./H_HYC3);
+CHP3_beta = asind(yCH3./H_HYC3);
+
+%horizontal 4th point
+xCH4 = L_Start;     
+yCH4 = Total_length;
+H_HYC4 = sqrt((xCH4^2)+(yCH4^2));
+CHP4 = asind(xCH4./H_HYC4);
+CHP4_beta = asind(yCH4./H_HYC4);
+
+%--- vertical parameter from camera---%
+
+%vertical 1st point
+xCV1 = C_height;     
+yCV1 = C_distance;
+HYCV1 = sqrt((xCV1^2)+(yCV1^2));
+CValpha1 = asind(xCV1./HYCV1);
+CVbeta1 = asind(yCV1./HYCV1);
+
+%vertical 2nd point
+xCV2 = C_height;     
+yCV2 = C_distance;
+HYCV2 = sqrt((xCV2^2)+(yCV2^2));
+CValpha2 = asind(xCV2./HYCV2);
+CVbeta2 = asind(yCV2./HYCV2);
+
+%vertical 3rd point
+xCV3 = C_height;     
+yCV3 = Total_length;
+HYCV3 = sqrt((xCV3^2)+(yCV3^2));
+CValpha3 = asind(xCV3./HYCV3);
+CVbeta3 = asind(yCV3./HYCV3);
+
+%vertical 4th point
+xCV4 = C_height;     
+yCV4 = Total_length;
+HYCV4 = sqrt((xCV4^2)+(yCV4^2));
+CValpha4 = asind(xCV4./HYCV4);
+CVbeta4 = asind(yCV4./HYCV4);
+% % 
+% patch([CHP1,CHP2,CHP3,CHP4],[-CValpha1,-CValpha2,-CValpha3,-CValpha4],'r','facealpha',0.5)
+% patch([-CHP1,-CHP2,-CHP3,-CHP4],[-CValpha1,-CValpha2,-CValpha3,-CValpha4],'r','facealpha',0.5)
+% xlabel(' horizontal angle for camera')
+% ylabel('vertical angle for camera')
+% zlabel('height of camera')
+% title('guiding lane projection from camera view')
+
+%-----------------------------------------Projection view from Headlight-------------------------------------------------------------%
+%---Horizontal parameter from scheinwerfer[headlight]---%
+
+%start with horizontal 1st point from Headlight
+xSWH1 = L_Start-H_width ;      
+ySWH1 =D2GP;
+H_HYSW1 = sqrt((xSWH1^2)+(ySWH1^2)); % hypotenuse of horizontal headlight angle for 1st horizontal point
+SWHP1 = asind(xSWH1./H_HYSW1); % horizontal alpha angle between starting point of guiding projection and Headlight
+SWHP1_beta = asind(ySWH1./H_HYSW1) ; % horizontal beta angle between Headlight and ending point of guiding projection light
+%SWHP1_D2R = deg2rad(SWHP1);
+
+% horizontal 2nd point 
+xSWH2 = (xSWH1+L_Width);                 
+ySWH2 = D2GP;
+H_HYSW2 = sqrt((xSWH2^2)+(ySWH2^2));
+SWHP2 = asind(xSWH2./H_HYSW2);
+SWHP2_beta = asind(ySWH2./H_HYSW2);
+%SWHP2_D2R = deg2rad(SWHP2);
+
+% horizontal 3rd point 
+xSWH3 = (xSWH1+L_Width);                  
+ySWH3 =SW_total_length;
+H_HYSW3 = sqrt((xSWH3^2)+(ySWH3^2));
+SWHP3 = asind(xSWH3./H_HYSW3);
+SWHP3_beta = asind(ySWH3./H_HYSW3);
+%SWHP3_D2R = deg2rad(SWHP3);
+
+%horizontal 4th point
+xSWH4 = L_Start-H_width;       
+ySWH4 = SW_total_length;
+H_HYSW4 = sqrt((xSWH4^2)+(ySWH4^2));
+SWHP4 = asind(xSWH4./H_HYSW4);
+SWHP4_beta = asind(ySWH4./H_HYSW4);
+%SWHP4_D2R = deg2rad(SWHP4);
+
+%---vertical parameter from scheinwerfer[headlight]---%
+%vertical 1st point
+zSWV1 = H_height;                         
+ySWV1 = H_HYSW1;
+HYSWV1 = sqrt((zSWV1^2)+(ySWV1^2));
+SWValpha1 = asind(zSWV1./HYSWV1);
+SWVbeta1 = asind(ySWV1./HYSWV1);
+
+%vertical 2nd point
+zSWV2 =H_height;                          
+ySWV2 = H_HYSW2;
+HYSWV2 = sqrt((zSWV2^2)+(ySWV2^2));
+SWValpha2 = asind(zSWV2./HYSWV2);
+SWVbeta2 = asind(ySWV2./HYSWV2);
+
+%vertical 3rd point
+zSWV3 = H_height;                         
+ySWV3 = H_HYSW3;
+HYSWV3 = sqrt((zSWV3^2)+(ySWV3^2));
+SWValpha3 = asind(zSWV3./HYSWV3);
+SWVbeta3 = asind(ySWV3./HYSWV3);
+
+%vertical 4th point
+zSWV4 = H_height;                         
+ySWV4 = H_HYSW4;
+HYSWV4 = sqrt((zSWV4^2)+(ySWV4^2));
+SWValpha4 = asind(zSWV4./HYSWV4);
+SWVbeta4 = asind(ySWV4./HYSWV4); 
+
+
+patch([SWHP1,SWHP2,SWHP3,SWHP4],[-SWValpha1,-SWValpha2,-SWValpha3,-SWValpha4],'y','facealpha',0.2)
+%patch([-SWHP1,-SWHP2,-SWHP3,-SWHP4],[-SWValpha1,-SWValpha2,-SWValpha3,-SWValpha4],'y','facealpha',0.2);
+% xlabel(' horizontal angle for scheinwerfer')
+% ylabel('vertical angle for scheinwerfer')
+% zlabel('height of scheinwerfer')
+% title('guiding lane projection from headlight view')
+
+
+%---------------------Mistake calculation of Guiding projection from Headlight vertically-----------------------------------------------------%
+
+%---vertical parameter from scheinwerfer[headlight] ---%
+
+% starting with 1st vertical fehler point of headlight view of projection %
+% SW_VFBeta_angle1 = (SWVbeta1 + V_Fehler1);
+% ZSW_VFVP1 = (H_height)/cosd(SW_VFBeta_angle1);
+% YSW_VFVP1 = ZSW_VFVP1*sind(SW_VFBeta_angle1);
+% SW_VFalpha1 = acosd(YSW_VFVP1/ZSW_VFVP1);
+
+ZSW_VFVP1 = (H_height);
+SW_VFalpha1 = SWValpha1  - V_Fehler1;
+V_HYSW_VF1  = (ZSW_VFVP1./ sind(SW_VFalpha1));
+YSW_VFVP1 = sqrt((V_HYSW_VF1^2)-(ZSW_VFVP1^2));
+SW_VFBeta_angle1 = (asind(1)-SW_VFalpha1 );
+
+% starting with 2nd vertical fehler point of headlight view of projection %
+% SW_VFBeta_angle2 = (SWVbeta2 + V_Fehler1);
+% ZSW_VFVP2 = (H_height)/cosd(SW_VFBeta_angle2);
+% YSW_VFVP2 = ZSW_VFVP2*sind(SW_VFBeta_angle2);
+% SW_VFalpha2 = acosd(YSW_VFVP2/ZSW_VFVP2);
+
+ZSW_VFVP2 = (H_height);
+SW_VFalpha2 = SWValpha2  - V_Fehler1;
+V_HYSW_VF2  = (ZSW_VFVP2./ sind(SW_VFalpha2));
+YSW_VFVP2 = sqrt((V_HYSW_VF2^2)-(ZSW_VFVP2^2));
+SW_VFBeta_angle2 = (asind(1)-SW_VFalpha2);
+
+% starting with 3rd vertical fehler point of headlight view of projection %
+% SW_VFBeta_angle3 = (SWVbeta3 + V_Fehler1);
+% ZSW_VFVP3 = (H_height)/cosd(SW_VFBeta_angle3);
+% YSW_VFVP3 = ZSW_VFVP3*sind(SW_VFBeta_angle3);
+% SW_VFalpha3 = acosd(YSW_VFVP3/ZSW_VFVP3);
+
+ZSW_VFVP3 = (H_height);
+SW_VFalpha3 = SWValpha3 - V_Fehler1;
+V_HYSW_VF3  = (ZSW_VFVP3./ sind(SW_VFalpha3 ));
+YSW_VFVP3 = sqrt((V_HYSW_VF3^2)-(ZSW_VFVP3^2));
+SW_VFBeta_angle3 = (asind(1)-SW_VFalpha3 );
+
+% starting with 4th vertical fehler point of headlight view of projection %
+%  SW_VFBeta_angle4 = (SWVbeta4 + V_Fehler1);
+% ZSW_VFVP4= (H_height)/cosd(SW_VFBeta_angle4);
+% YSW_VFVP4 = ZSW_VFVP4*sind(SW_VFBeta_angle4);
+% SW_VFalpha4 = acosd(YSW_VFVP4/ZSW_VFVP4);
+
+
+ZSW_VFVP4 = (H_height);
+SW_VFalpha4 = SWValpha4 - V_Fehler1;
+V_HYSW_VF4  = (ZSW_VFVP4/ sind(SW_VFalpha4));
+YSW_VFVP4 = sqrt((V_HYSW_VF4^2)-(ZSW_VFVP4^2));
+SW_VFBeta_angle4 = (asind(1)-SW_VFalpha4 );
+
+%---Horizontal parameter from scheinwerfer[headlight] FOR VERTICAL ANGLE MOVEMENT---%
+
+%start with horizontal 1st point from Headlight
+
+xSW_VFH1 =L_Start-H_width ; 
+H_HYSW_VF1 = YSW_VFVP1; % hypotenuse of horizontal headlight angle for 1st horizontal point OF VERTICAL FEHLER
+ySW_VFH1 =sqrt((H_HYSW_VF1^2)-(xSW_VFH1^2));
+SW_VFHP1 = asind(xSW_VFH1./H_HYSW_VF1); % horizontal alpha angle between starting point of guiding projection and Headlight for vertical fehler
+SW_VFHP1_beta = asind(ySW_VFH1./H_HYSW_VF1) ; % horizontal beta angle between Headlight and ending point of guiding projection light for vertical felher
+
+% horizontal 2nd point 
+xSW_VFH2 = xSW_VFH1 + L_Width; 
+H_HYSW_VF2 = YSW_VFVP2;
+ySW_VFH2 = sqrt((H_HYSW_VF2^2)-(xSW_VFH2^2));
+SW_VFHP2 = asind(xSW_VFH2./H_HYSW_VF2);
+SW_VFHP2_beta = asind(ySW_VFH2./H_HYSW_VF2);
+
+% horizontal 3rd point 
+xSW_VFH3 = xSW_VFH1 + L_Width;
+H_HYSW_VF3 = YSW_VFVP3;
+ySW_VFH3 =sqrt((H_HYSW_VF3^2)-(xSW_VFH3^2));
+SW_VFHP3 = asind(xSW_VFH3./H_HYSW_VF3);
+SW_VFHP3_beta = asind(ySW_VFH3./H_HYSW_VF3);
+
+%horizontal 4th point
+xSW_VFH4 = L_Start-H_width; 
+H_HYSW_VF4 =YSW_VFVP4;
+ySW_VFH4 = sqrt((H_HYSW_VF4^2)-(xSW_VFH4^2));
+SW_VFHP4 = asind(xSW_VFH4./H_HYSW_VF4);
+SW_VFHP4_beta = asind(ySW_VFH4./H_HYSW_VF4);
+
+
+% patch([SW_VFHP1,SW_VFHP2,SW_VFHP3,SW_VFHP4],[-SW_VFalpha1,-SW_VFalpha2,-SW_VFalpha3,-SW_VFalpha4 ],'m','facealpha',0.2);
+%patch([-SW_VFHP1,-SW_VFHP2,-SW_VFHP3,-SW_VFHP4],[SW_VFalpha1,SW_VFalpha2,SW_VFalpha3,SW_VFalpha4 ],'m','facealpha',0.2);
+
+
+% xlabel(' horizontal angle for scheinwerfer')
+% ylabel('vertical angle for scheinwerfer')
+% zlabel('height of scheinwerfer')
+% title(' vertically mistaken guiding lane projection from headlight view')
+
+
+
+%---------------------Mistake calculation of Guiding projection from Headlight horizontally-----------------------------------------------------%
+hySWHH0 = D2GP;
+SWFAlpha_angle0 = (H_Fehler1);
+xSWHFH0 = hySWHH0* sind(SWFAlpha_angle0);
+ySWHFH0 = sqrt((hySWHH0^2)-(xSWHFH0^2));
+SWFBeta_angle0 = asind(1)- SWFAlpha_angle0 ;
+
+hySWHH01 =  SW_total_length;
+SWFAlpha_angle01 = (H_Fehler1);
+xSWHFH01 = hySWHH01* sind(SWFAlpha_angle01);
+ySWHFH01 = sqrt((hySWHH01^2)-(xSWHFH01^2));
+SWFBeta_angle01 = asind(1)- SWFAlpha_angle01 ;
+
+%---Horizontal parameter from scheinwerfer[headlight] Fehler(mistake)---%
+
+%start with horizontal 1st point from Headlight
+
+HYSW_HFHP1 = H_HYSW1;
+alphaSW_HFHP1 =  SWHP1+ H_Fehler1 ;
+xSW_HFHP1 = HYSW_HFHP1*sind(alphaSW_HFHP1);
+ySW_HFHP1 = HYSW_HFHP1*cosd(alphaSW_HFHP1);
+betaSW_HFHP1 = asind(1)- alphaSW_HFHP1;
+
+% horizontal 2nd point 
+HYSW_HFHP2 = H_HYSW2;
+alphaSW_HFHP2 =  SWHP2+ H_Fehler1 ;
+xSW_HFHP2 = HYSW_HFHP2*sind(alphaSW_HFHP2);
+ySW_HFHP2 = HYSW_HFHP2*cosd(alphaSW_HFHP2);
+betaSW_HFHP2 = asind(1)- alphaSW_HFHP2;
+ 
+% horizontal 3rd point 
+HYSW_HFHP3 = H_HYSW3;
+alphaSW_HFHP3 =  SWHP3+ H_Fehler1 ;
+xSW_HFHP3 = HYSW_HFHP3*sind(alphaSW_HFHP3);
+ySW_HFHP3 = HYSW_HFHP3*cosd(alphaSW_HFHP3);
+betaSW_HFHP3 = asind(1)- alphaSW_HFHP3; 
+
+%horizontal 4th point
+HYSW_HFHP4 = H_HYSW4;
+alphaSW_HFHP4 =  SWHP4+ H_Fehler1 ;
+xSW_HFHP4 = HYSW_HFHP4*sind(alphaSW_HFHP4);
+ySW_HFHP4 = HYSW_HFHP4*cosd(alphaSW_HFHP4);
+betaSW_HFHP4 = asind(1)- alphaSW_HFHP4;
+
+%patch([xSW_HFHP1,xSW_HFHP2,xSW_HFHP3,xSW_HFHP4],[ySW_HFHP1,ySW_HFHP2,ySW_HFHP3,ySW_HFHP4],'g')
+
+% xlabel(' x value for scheinwerfer')
+% ylabel('y value angle for scheinwerfer')
+%title('horizontally mistaken guiding lane projection from top view')
+
+%---vertical parameter from scheinwerfer[headlight] of horizontal Fehler(mistake)---%
+%Vertical 1st point
+zSW_HFV1 = H_height;                                       
+ySW_HFV1 = ySW_HFHP1;
+HYSW_HFV1 = sqrt((zSW_HFV1^2)+(ySW_HFV1^2));
+alpha_HFV1 = asind(zSW_HFV1/HYSW_HFV1);
+beta_HFV1 = asind(ySW_HFV1/HYSW_HFV1);
+
+%Vertical 2nd point
+zSW_HFV2 = H_height;                                       
+ySW_HFV2 = ySW_HFHP2;
+HYSW_HFV2 = sqrt((zSW_HFV2^2)+(ySW_HFV2^2));
+alpha_HFV2 = asind(zSW_HFV2/HYSW_HFV2);
+beta_HFV2 = asind(ySW_HFV2/HYSW_HFV2);
+
+%Vertical 3rd point
+zSW_HFV3 = H_height;                            
+ySW_HFV3 = ySW_HFHP3;
+HYSW_HFV3 = sqrt((zSW_HFV3^2)+(ySW_HFV3^2));
+alpha_HFV3 = asind(zSW_HFV3/HYSW_HFV3);
+beta_HFV3 = asind(ySW_HFV3/HYSW_HFV3);
+
+
+%Vertical 4th point
+zSW_HFV4 = H_height;
+ySW_HFV4 = ySW_HFHP4;
+HYSW_HFV4 = sqrt((zSW_HFV4^2)+(ySW_HFV4^2));
+alpha_HFV4 = asind(zSW_HFV4/HYSW_HFV4);
+beta_HFV4 = asind(ySW_HFV4/HYSW_HFV4);
+
+%patch([zSW_HFV1,zSW_HFV2,zSW_HFV3,zSW_HFV4],[ySW_HFV1,ySW_HFV2,ySW_HFV3,ySW_HFV4],'g')
+
+
+patch([alphaSW_HFHP1,alphaSW_HFHP2,alphaSW_HFHP3,alphaSW_HFHP4],[-alpha_HFV1,-alpha_HFV2,-alpha_HFV3,-alpha_HFV4],'G','facealpha',0.2);
+%patch([-alphaSW_HFHP1,-alphaSW_HFHP2,-alphaSW_HFHP3,-alphaSW_HFHP4],[-alpha_HFV1,-alpha_HFV2,-alpha_HFV3,-alpha_HFV4],'G','facealpha',0.2);
+
+xlabel(' horizontal angle for scheinwerfer')
+ylabel('vertical angle for scheinwerfer')
+zlabel('height of scheinwerfer')
+title('horizontally mistaken guiding lane projection from headlight view')
+axis equal
+
+% %HORIZONTALLY ARC LENGTH CALCULATION OF GUIDING PROJECTION FROM HEADLIGHT5
+% 
+% %arc length calculator%
+% r= D2GP;                                         theta = H_Fehler1_rad2deg;
+% arclength_D2GP = r*theta;
+% 
+% r= SW_total_length; theta = H_Fehler1_rad2deg;
+% arclength_SW_total_length = r*theta;
+% 
+% R_H1= D2GP;                       theta1 =  H_Fehler1_rad2deg + SWHP1_D2R ;
+% arclength_HP1 = R_H1*theta1;
+% 
+% R_H2= D2GP;                        theta2 = H_Fehler1_rad2deg + SWHP2_D2R ;
+% arclength_HP2 =R_H2*theta2;
+% 
+% R_H3=  SW_total_length;            theta3 = H_Fehler1_rad2deg + SWHP3_D2R ;
+% arclength_HP3 = R_H3*theta3;
+% 
+% R_H4= SW_total_length;             theta4 = H_Fehler1_rad2deg + SWHP4_D2R ;
+% arclength_HP4 = R_H4*theta4;
+% 
+% %sideB VALUE OF scheinwerfer in mistake projection
+% 
+% H_HFHP1_B = arclength_HP1 - arclength_D2GP;
+% H_HFHP2_B = arclength_HP2 - arclength_D2GP;
+% H_HFHP3_B = arclength_HP3 - arclength_SW_total_length;
+% H_HFHP4_B = arclength_HP4 - arclength_SW_total_length;
+
+
+% %---------------------Mistake calculation of Guiding projection from Camera -----------------------------------------------------%
+
+%-------------------horizontally calculation for horizontally mistaken guiding projection------------------------------%
+
+%start with horizontal 1st point from camera
+XC_HFHP1 = (xSW_HFHP1+ (H_width));
+YC_HFHP1 = (ySW_HFHP1+C_offset);
+HYC_HFHP1 = sqrt((XC_HFHP1^2)+(YC_HFHP1^2));
+alpha_HFHP1 = asind(XC_HFHP1./HYC_HFHP1);
+beta_HFHP1 = asind(YC_HFHP1./HYC_HFHP1);
+
+%start with horizontal 2nd point from camera
+XC_HFHP2 = (xSW_HFHP2+ (H_width));
+YC_HFHP2 = (ySW_HFHP2+C_offset);
+HYC_HFHP2 = sqrt((XC_HFHP2^2)+(YC_HFHP2^2));
+alpha_HFHP2 = asind(XC_HFHP2./HYC_HFHP2);
+beta_HFHP2 = asind(YC_HFHP2./HYC_HFHP2);
+
+%start with horizontal 3rd point from camera
+XC_HFHP3 = (xSW_HFHP3+ (H_width));
+YC_HFHP3 = (ySW_HFHP3+C_offset);
+HYC_HFHP3 = sqrt((XC_HFHP3^2)+(YC_HFHP3^2));
+alpha_HFHP3 = asind(XC_HFHP3./HYC_HFHP3);
+beta_HFHP3 = asind(YC_HFHP3./HYC_HFHP3);
+
+%start with horizontal 4th point from camera
+XC_HFHP4 = (xSW_HFHP4+ (H_width));
+YC_HFHP4 = (ySW_HFHP4+C_offset);
+HYC_HFHP4 = sqrt((XC_HFHP4^2)+(YC_HFHP4^2));
+alpha_HFHP4 = asind(XC_HFHP4./HYC_HFHP4);
+beta_HFHP4 = asind(YC_HFHP4./HYC_HFHP4);
+
+%%%%%----------------------------vertical calculation for horizontal mistake of headlight-------------------%%%
+
+% start with vertical 1st point from camera
+ZC_HFVP1 = C_height;
+YC_HFVP1 = YC_HFHP1;
+HYC_HFVP1 = sqrt((ZC_HFVP1^2)+(YC_HFVP1^2));
+alpha_HFVP1 = asind(ZC_HFVP1./HYC_HFVP1);
+beta_HFVP1 = asind(YC_HFVP1./HYC_HFVP1);
+
+% start with vertical 2nd point from camera
+ZC_HFVP2 = C_height;
+YC_HFVP2 = YC_HFHP2;
+HYC_HFVP2 = sqrt((ZC_HFVP2^2)+(YC_HFVP2^2));
+alpha_HFVP2 = asind(ZC_HFVP2./HYC_HFVP2);
+beta_HFVP2 = asind(YC_HFVP2./HYC_HFVP2);
+
+% start with vertical 3rd point from camera
+ZC_HFVP3 = C_height;
+YC_HFVP3 = YC_HFHP3;
+HYC_HFVP3 = sqrt((ZC_HFVP3^2)+(YC_HFVP3^2));
+alpha_HFVP3 = asind(ZC_HFVP3./HYC_HFVP3);
+beta_HFVP3 = asind(YC_HFVP3./HYC_HFVP3);
+
+% start with vertical 4th point from camera
+ZC_HFVP4 = C_height;
+YC_HFVP4 = YC_HFHP4;
+HYC_HFVP4 = sqrt((ZC_HFVP4^2)+(YC_HFVP4^2));
+alpha_HFVP4 = asind(ZC_HFVP4./HYC_HFVP4);
+beta_HFVP4 = asind(YC_HFVP4./HYC_HFVP4);
+
+%patch([alpha_HFHP1,alpha_HFHP2,alpha_HFHP3,alpha_HFHP4,],[-alpha_HFVP1,-alpha_HFVP2,-alpha_HFVP3,-alpha_HFVP4],'g','facealpha',0.5);
+% patch([-alpha_HFHP1,-alpha_-HFHP2,-alpha_HFHP3,-alpha_HFHP4,],[-alpha_HFVP1,-alpha_HFVP2,-alpha_HFVP3,-alpha_HFVP4],'b','facealpha',0.5);
+% 
+% xlabel(' horizontal angle for camera')
+% ylabel('vertical angle for camera')
+% zlabel('height of camera')
+% title('horizontally mistaken guiding lane projection from camera view')
+
+
+%%%%%-------------------------------------------headlight moved vertically by mistake and camera view calculation of mistake--------------------------------%%%%%
+
+%%%%-------------------------------------------horizontal calculation for vertically fault in headlight-------------------------------------%%%%%%
+
+%start with horizontal 1st point from camera
+XC_VFHP1 = (L_Start./2);
+YC_VFHP1 = YSW_VFVP1+C_offset;
+HYC_VFHP1 = sqrt((XC_VFHP1^2)+(YC_VFHP1^2));
+alpha_VFHP1 = asind(XC_VFHP1./HYC_VFHP1);
+beta_VFHP1 = asind(YC_VFHP1./HYC_VFHP1);
+
+%start with horizontal 2nd point from camera
+XC_VFHP2 = (Total_width./2);
+YC_VFHP2 = YSW_VFVP2+ C_offset;
+HYC_VFHP2 = sqrt((XC_VFHP2^2)+(YC_VFHP2^2));
+alpha_VFHP2 = asind(XC_VFHP2./HYC_VFHP2);
+beta_VFHP2 = asind(YC_VFHP2./HYC_VFHP2);
+
+%start with horizontal 3rd point from camera
+XC_VFHP3 = (Total_width./2);
+YC_VFHP3 = YSW_VFVP3 +C_offset;
+HYC_VFHP3 = sqrt((XC_VFHP3^2)+(YC_VFHP3^2));
+alpha_VFHP3 = asind(XC_VFHP3./HYC_VFHP3);
+beta_VFHP3 = asind(YC_VFHP3./HYC_VFHP3);
+
+
+%start with horizontal 4th point from camera
+XC_VFHP4 = (L_Start./2);
+YC_VFHP4 = YSW_VFVP4+C_offset;
+HYC_VFHP4 = sqrt((XC_VFHP4^2)+(YC_VFHP4^2));
+alpha_VFHP4 = asind(XC_VFHP4./HYC_VFHP4);
+beta_VFHP4 = asind(YC_VFHP4./HYC_VFHP4);
+
+
+%%%%%------------------------------------------vertical calculation for vertically mistake of headlight from camera-------------------%%%%%%
+
+% start with vertical 1st point from camera
+ZC_VFVP1 = C_height;                                  
+YC_VFVP1 = HYC_VFHP1;
+HYC_VFVP1 = sqrt((ZC_VFVP1^2)+(YC_VFVP1^2));
+alpha_VFVP1 = asind(ZC_VFVP1./HYC_VFVP1);
+beta_VFVP1 = asind(YC_VFVP1./HYC_VFVP1);
+
+
+% start with vertical 2nd point from camera
+ZC_VFVP2 = C_height;
+YC_VFVP2 = HYC_VFHP2;
+HYC_VFVP2 = sqrt((ZC_VFVP2^2)+(YC_VFVP2^2));
+alpha_VFVP2 = asind(ZC_VFVP2./HYC_VFVP2);
+beta_VFVP2 = asind(YC_VFVP2./HYC_VFVP2);
+
+% start with vertical 3rd point from camera
+ZC_VFVP3 = C_height;
+YC_VFVP3 = HYC_VFHP3;
+HYC_VFVP3 = sqrt((ZC_VFVP3^2)+(YC_VFVP3^2));
+alpha_VFVP3 = asind(ZC_VFVP3./HYC_VFVP3);
+beta_VFVP3 = asind(YC_VFVP3./HYC_VFVP3);
+
+% start with vertical 4th point from camera
+ZC_VFVP4 = C_height;
+YC_VFVP4 = HYC_VFHP4;
+HYC_VFVP4 = sqrt((ZC_VFVP4^2)+(YC_VFVP4^2));
+alpha_VFVP4 = asind(ZC_VFVP4./HYC_VFVP4);
+beta_VFVP4 = asind(YC_VFVP4./HYC_VFVP4);
+
+% patch([alpha_VFHP1,alpha_VFHP2,alpha_VFHP3,alpha_VFHP4,],[-alpha_VFVP1,-alpha_VFVP2,-alpha_VFVP3,-alpha_VFVP4],'b','facealpha',0.3);
+% %patch([-alpha_VFHP1,-alpha_VFHP2,-alpha_VFHP3,-alpha_VFHP4,],[-alpha_VFVP1,-alpha_VFVP2,-alpha_VFVP3,-alpha_VFVP4],'b','facealpha',0.3);
+% xlabel(' horizontal angle for camera')
+% ylabel('vertical angle for camera')
+% zlabel('height of camera')
+% title('vertically mistaken guiding lane projection from camera view')
+
+% 
+% %%%%%%%%%%%%%%%%---------------------SCHEINWERFER TO SCHEINWERFER RIGHT TO LEFT----------------------------------------%%%%%%%%%%%%%%%%%%%%%%%%
+% %HORIZONTAL PARAMETER FOR PROJECTION OF RIGHT SIDE HEADLAMP ON LEFT SIDE STREIFE----------------%%%
+% %------------------HORIZONTAL 1ST POINT---------------------------------%%%%%%%%%%%%%%%%%%%%%%
+% 
+% X_R2LHP1 = H_width + xSWH1; 
+% Y_R2LHP1 = D2GP;
+% HY_R2LHP1 = sqrt((X_R2LHP1^2)+(Y_R2LHP1^2));
+% alpha_R2LHP1 = asind(X_R2LHP1./HY_R2LHP1);
+% beta_R2LHP1 = asind(Y_R2LHP1./HY_R2LHP1);
+% 
+% %---------------HORIZONTAL 2ND POINT--------------------------------%
+% 
+% X_R2LHP2 = H_width + xSWH1 + L_Width; 
+% Y_R2LHP2 = D2GP;
+% HY_R2LHP2 = sqrt((X_R2LHP2^2)+(Y_R2LHP2^2));
+% alpha_R2LHP2 = asind(X_R2LHP2./HY_R2LHP2);
+% beta_R2LHP2 = asind(Y_R2LHP2./HY_R2LHP2);
+% 
+% %--------------HORIZONTAL 3RD POINT--------------------------------%
+% 
+% X_R2LHP3 = H_width + xSWH1 + L_Width; 
+% Y_R2LHP3 = SW_total_length;
+% HY_R2LHP3= sqrt((X_R2LHP3^2)+(Y_R2LHP3^2));
+% alpha_R2LHP3 = asind(X_R2LHP3./HY_R2LHP3);
+% beta_R2LHP3 = asind(Y_R2LHP3./HY_R2LHP3);
+% 
+% %--------------HORIZONTAL 4TH POINT--------------------------------%
+% 
+% 
+% X_R2LHP4 = H_width + xSWH1; 
+% Y_R2LHP4 = SW_total_length;
+% HY_R2LHP4= sqrt((X_R2LHP4^2)+(Y_R2LHP4^2));
+% alpha_R2LHP4 = asind(X_R2LHP4./HY_R2LHP4);
+% beta_R2LHP4 = asind(Y_R2LHP4./HY_R2LHP4);
+% 
+% %VERTICAL PARAMETER FOR PROJECTION OF RIGHT SIDE HEADLAMP ON LEFT SIDE STREIFE----------------%%%
+% %--------------VERTICAL 1ST POINT----------------------------------%
+% X_R2LVP1 = H_height; 
+% Y_R2LVP1 = HY_R2LHP1;
+% HY_R2LVP1= sqrt((X_R2LVP1^2)+(Y_R2LVP1^2));
+% alpha_R2LVP1 = asind(X_R2LVP1./HY_R2LVP1);
+% beta_R2LVP1 = asind(Y_R2LVP1./HY_R2LVP1);
+% 
+% %--------------VERTICAL 2ND POINT----------------------------------%
+% X_R2LVP2 = H_height; 
+% Y_R2LVP2 = HY_R2LHP2;
+% HY_R2LVP2= sqrt((X_R2LVP2^2)+(Y_R2LVP2^2));
+% alpha_R2LVP2 = asind(X_R2LVP2./HY_R2LVP2);
+% beta_R2LVP2 = asind(Y_R2LVP2./HY_R2LVP2);
+% 
+% %--------------VERTICAL 3RD POINT----------------------------------%
+% X_R2LVP3 = H_height; 
+% Y_R2LVP3 = HY_R2LHP3;
+% HY_R2LVP3= sqrt((X_R2LVP3^2)+(Y_R2LVP3^2));
+% alpha_R2LVP3 = asind(X_R2LVP3./HY_R2LVP3);
+% beta_R2LVP3 = asind(Y_R2LVP3./HY_R2LVP3);
+% 
+% %--------------VERTICAL 4TH POINT----------------------------------%
+% 
+% X_R2LVP4 = H_height; 
+% Y_R2LVP4 = HY_R2LHP4;
+% HY_R2LVP4= sqrt((X_R2LVP4^2)+(Y_R2LVP4^2));
+% alpha_R2LVP4 = asind(X_R2LVP4./HY_R2LVP4);
+% beta_R2LVP4 = asind(Y_R2LVP4./HY_R2LVP4);
+% 
+% %-----------------------PATCH PROJECTION FROM RIGHT HEADLIGHT------------%
+% % patch([SWHP1,SWHP2,SWHP3,SWHP4],[-SWValpha1,-SWValpha2,-SWValpha3,-SWValpha4],'m','facealpha',0.2)
+% % patch([-alpha_R2LHP1,-alpha_R2LHP2,-alpha_R2LHP3,-alpha_R2LHP4],[-alpha_R2LVP1,-alpha_R2LVP2,-alpha_R2LVP3,-alpha_R2LVP4],'m','facealpha',0.2)
+% 
+% % %-----------------------PATCH PROJECTION FROM left HEADLIGHT------------%
+% % patch([-SWHP1,-SWHP2,-SWHP3,-SWHP4],[-SWValpha1,-SWValpha2,-SWValpha3,-SWValpha4],'c','facealpha',0.2)
+% % patch([alpha_R2LHP1,alpha_R2LHP2,alpha_R2LHP3,alpha_R2LHP4],[-alpha_R2LVP1,-alpha_R2LVP2,-alpha_R2LVP3,-alpha_R2LVP4],'c','facealpha',0.2)
+
+% 
+% view([0 37.5])
+axis equal
+
+
+
+% 
+% R = [cosd(H_Fehler1) -sind(H_Fehler1); sind(H_Fehler1) cosd(H_Fehler1)];
+% 
+% xyz = [[SWHP1,SWHP2,SWHP3,SWHP4];[-SWValpha1,-SWValpha2,-SWValpha3,-SWValpha4]];
+% 
+% ROTATIONPOINT = R*xyz;
+% ROTATIONPOINT(1,:)
+% patch(ROTATIONPOINT(1,:),ROTATIONPOINT(2,:)-D2GP,'y')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
