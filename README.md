@@ -144,3 +144,25 @@ patch([alpha_VFHP1,alpha_VFHP2,alpha_VFHP3,alpha_VFHP4,],[-alpha_VFVP1,-alpha_VF
 
      end 
 end
+
+CH_Diff= CH_SollPoint - CH_istPoint ;
+CV_Diff = CV_SollPoint - CV_istPoint ; 
+TOLERANCE = 0 ;
+
+if  CH_Diff < TOLERANCE
+   CH_istPoint = CH_istPoint + 0.001 ;
+  
+end
+
+if CH_Diff > TOLERANCE
+       CH_istPoint = CH_istPoint - 0.001 ; 
+end
+if CV_Diff < TOLERANCE
+      CV_istPoint = CV_istPoint + 0.001 ;
+end
+if CV_Diff > TOLERANCE 
+     CV_istPoint = CV_istPoint - 0.001 ;
+end
+
+
+
