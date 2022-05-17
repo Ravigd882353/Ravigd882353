@@ -145,23 +145,55 @@ patch([alpha_VFHP1,alpha_VFHP2,alpha_VFHP3,alpha_VFHP4,],[-alpha_VFVP1,-alpha_VF
      end 
 end
 
-CH_Diff= CH_SollPoint - CH_istPoint ;
-CV_Diff = CV_SollPoint - CV_istPoint ; 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%---------------------ERRROR Calculation-------------------------------%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+CH_SollPoint  = [CHalpha1,CHalpha2,CHalpha3,CHalpha4] ;
+CH_IstPoint = [8.774,10.792,5.840,5.394];
+
+CV_SollPoint = -[CValpha1,CValpha2,CValpha3,CValpha4];
+CV_IstPoint = -[8.497,8.520,1.872,1.870];
+
+
+CH_Diff= (CH_SollPoint - CH_IstPoint).^2 ;
+CV_Diff = (CV_SollPoint - CV_IstPoint).^2 ; 
+
+HYP_BF = hypot(CH_Diff,CV_Diff);
+ERR (i,j)= round((HYP_BF(1,1) + HYP_BF(1,2) + HYP_BF(1,3) + HYP_BF(1,4)),5,'significant');
+
+
 TOLERANCE = 0 ;
 
-if  CH_Diff < TOLERANCE
-   CH_istPoint = CH_istPoint + 0.001 ;
-  
-end
 
-if CH_Diff > TOLERANCE
-       CH_istPoint = CH_istPoint - 0.001 ; 
-end
-if CV_Diff < TOLERANCE
-      CV_istPoint = CV_istPoint + 0.001 ;
-end
-if CV_Diff > TOLERANCE 
-     CV_istPoint = CV_istPoint - 0.001 ;
+k = 0 ;
+r = 0;
+% while   (CH_SollPoint < CH_IstPoint)
+%         CH_IstPoint1 = CH_IstPoint - 0.01  ; 
+%         CH_IstPoint = CH_IstPoint1;
+%   k = k+1;
+% end
+% % 
+% % 
+% % 
+% while     CH_SollPoint > CH_IstPoint
+%           CH_IstPoint2 = CH_IstPoint + 0.001 ;
+%           CH_IstPoint = CH_IstPoint2;
+%           r = r+1 ;
+% end
+
+% % % % 
+% while    CV_SollPoint < CV_IstPoint
+%          CV_IstPoint1 = CV_IstPoint + 0.001  ;
+%          CV_IstPoint = CV_IstPoint1 ;
+% 
+% end
+aa = 0;
+% 
+while  CV_SollPoint > CV_IstPoint 
+       CV_IstPoint2 = CV_IstPoint  + 0.001   ;
+       CV_IstPoint = CV_IstPoint2 ; 
+aa = aa+1;
 end
 
 
